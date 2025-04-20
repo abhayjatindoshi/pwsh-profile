@@ -5,8 +5,8 @@ $customProfileName = "my-profile.ps1"
 $customProfilePath = "$(Split-Path -parent $profile)\$customProfileName"
 
 if (-not (Test-Path -Path $profile)) {
+    Write-Host -ForegroundColor Gray "Didn't find default profile file, creating one..."
     New-Item -Path $profile -ItemType File -Force | Out-Null
-    Write-Host "Profile file created $profile"
 }
 
 $profileData = Get-Content -Path $profile
@@ -19,27 +19,24 @@ foreach ($line in $profileData) {
 }
 
 if (-not $hasCustomProfileInit) {
+    Write-Host -ForegroundColor Gray "Setting up custom profile initialization..."
     Add-Content -Path $profile -Value ". $customProfilePath"
-    Write-Host "The script has been added to your profile."
 }
     
+Write-Host -ForegroundColor Blue "Custom profile updated on: $lastUpdate"
+
 $today = Get-Date
-if ($lastUpdate.AddDays(2) -gt $today) {
-    Write-Host "Last update: $lastUpdate"
-    Write-Host "Skipping update check..."
-}
-else {
-    Write-Host "Last update: $lastUpdate"
-    Write-Host "Checking for updates..."
+if ($lastUpdate.AddDays(2) -lt $today) {
+    Write-Host -ForegroundColor Gray "Updating custom profile..."
 
     if (Test-Path -Path $customProfilePath) {
         Remove-Item -Path $customProfilePath -Force
-        Write-Host "Removed old profile: $customProfilePath"
     }
 
     Invoke-WebRequest $profileUrl -OutFile $customProfilePath
-    "$lastUpdate = Get-Date -Date `"$(Get-Date)`" `n" + (Get-Content $customProfilePath | Select-Object -Skip 1) | Set-Content $customProfilePath
-
+    $customProfileScript = Get-Content $customProfilePath
+    $customProfileScript[0] = "`$lastUpdate = Get-Date -Date `"$(Get-Date)`""
+    $customProfileScript | Set-Content $customProfilePath
 }
 
 $alias = @{
