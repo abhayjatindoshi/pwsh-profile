@@ -69,4 +69,4 @@ function Invoke-MyAlias {
 foreach ($key in $alias.Keys) {
     Set-Alias -Name $key -Value Invoke-MyAlias
 }
-Write-Output "Personal profile loaded - Welcome $Env:UserName!"
+Write-Output "Personal profile loaded - Welcome $Env:UserName!"     
