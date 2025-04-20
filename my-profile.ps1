@@ -2,9 +2,9 @@ $lastUpdate = Get-Date -Date "2000-01-01 00:00:00"
 $profileUrl = "https://raw.githubusercontent.com/abhayjatindoshi/pwsh-profile/refs/heads/main/my-profile.ps1"
 
 $customProfileName = "my-profile.ps1"
-$customProfilePath = "$(Split-Path -parent $profile)/$customProfileName"
+$customProfilePath = "$(Split-Path -parent $profile)\$customProfileName"
 
-if (not (Test-Path -Path $profile)) {
+if (-not (Test-Path -Path $profile)) {
     New-Item -Path $profile -ItemType File -Force | Out-Null
     Write-Host "Profile file created $profile"
 }
@@ -12,7 +12,7 @@ if (not (Test-Path -Path $profile)) {
 $profileData = Get-Content -Path $profile
 $hasCustomProfileInit = $false
 foreach ($line in $profileData) {
-    if ($line -match ". $customProfilePath") {
+    if ($line -eq ". $customProfilePath") {
         $hasCustomProfileInit = $true
         break
     }
@@ -43,12 +43,11 @@ else {
 }
 
 $alias = @{
-    "ff"     = "cd D:\finances"
     "edit"   = "open $profile"
     "reload" = ". $profile"
     ".."     = "cd .."
-    "..."    = "cd ../.."
-    "...."   = "cd ../../.."
+    "..."    = "cd ..\.."
+    "...."   = "cd ..\..\.."
     "gct"    = "git commit"
     "gph"    = "git push"
     "gpl"    = "git pull"
