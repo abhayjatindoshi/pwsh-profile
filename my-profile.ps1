@@ -1,5 +1,5 @@
 $lastUpdate = Get-Date -Date "2000-01-01 00:00:00"
-$profileUrl = "https://raw.githubusercontent.com/abhayjatindoshi/finances/refs/heads/main/quries.sql"
+$profileUrl = "https://raw.githubusercontent.com/abhayjatindoshi/pwsh-profile/refs/heads/main/my-profile.ps1"
 
 $customProfileName = "my-profile.ps1"
 $customProfilePath = "$(Split-Path -parent $profile)/$customProfileName"
