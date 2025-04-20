@@ -38,11 +38,12 @@ else {
     }
 
     Invoke-WebRequest $profileUrl -OutFile $customProfilePath
-    "$lastUpdate = Get-Date -Date `"$(Get-Date)`" `n" + (Get-Content $profile | Select-Object -Skip 1) | Set-Content $profile
+    "$lastUpdate = Get-Date -Date `"$(Get-Date)`" `n" + (Get-Content $customProfilePath | Select-Object -Skip 1) | Set-Content $customProfilePath
 
 }
 
 $alias = @{
+    "ff"     = "cd D:\finances"
     "edit"   = "open $profile"
     "reload" = ". $profile"
     ".."     = "cd .."
