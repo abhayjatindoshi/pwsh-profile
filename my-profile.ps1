@@ -35,7 +35,7 @@ if ($lastUpdate.AddDays(2) -lt $today) {
 
     Invoke-WebRequest $profileUrl -OutFile $customProfilePath
     $customProfileScript = Get-Content $customProfilePath
-    $customProfileScript[0] = "`$lastUpdate = Get-Date -Date `"$(Get-Date)`""
+    $customProfileScript[0] = "`$lastUpdate = Get-Date -Date `"$(Get-Date -Format "yyyy-MM-dd HH:mm:ss")`""
     $customProfileScript | Set-Content $customProfilePath
 }
 
@@ -69,4 +69,4 @@ function Invoke-MyAlias {
 foreach ($key in $alias.Keys) {
     Set-Alias -Name $key -Value Invoke-MyAlias
 }
-Write-Output "Personal profile loaded - Welcome $Env:UserName!"     
+Write-Output "Personal profile loaded - Welcome $Env:UserName!"
