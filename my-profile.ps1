@@ -39,7 +39,7 @@ if ($lastUpdate.AddDays(2) -lt $today) {
     $customProfileScript | Set-Content $customProfilePath
 }
 
-$alias = {
+$alias = @{
     "edit"   = "open $profile"
     "reload" = ". $profile"
     ".."     = "cd .."
